@@ -12,6 +12,7 @@ import torch
 import soundfile as sf
 import torch.nn as nn
 from utils import demix_track, get_model_from_config
+import itertools
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -20,7 +21,10 @@ warnings.filterwarnings("ignore")
 def run_folder(model, args, config, device, verbose=False):
     start_time = time.time()
     model.eval()
-    all_mixtures_path = glob.glob(args.input_folder + '/*.wav')
+    audio_extensions = ('*.wav', '*.mp3', '*.flac', '*.ogg', '*.m4a', '*.aac')
+    all_mixtures_path = list(itertools.chain.from_iterable(
+    glob.glob(os.path.join(args.input_folder, ext)) for ext in audio_extensions
+))
     total_tracks = len(all_mixtures_path)
     print('Total tracks found: {}'.format(total_tracks))
 
