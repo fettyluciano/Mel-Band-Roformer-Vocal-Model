@@ -1,4 +1,4 @@
-torch>=2.0.1
+torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 numpy
 pandas
 soundfile
